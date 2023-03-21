@@ -26,11 +26,8 @@ class TodoController extends Controller
     {
         // BRIEF: Validate the request and save a new TODO, then redirect back to the index
         $todo = new Todo;
-        $todo->title = Input::get('title');
+        $todo->title = $request->title;
         $todo->save();
-
-        Session::flash('message', 'New todo has been created.');
-        return route('index');
     }
 
     /**
