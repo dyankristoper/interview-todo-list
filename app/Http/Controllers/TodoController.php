@@ -25,6 +25,9 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         // BRIEF: Validate the request and save a new TODO, then redirect back to the index
+
+        // TODO: Add validation of input
+
         $todo = new Todo;
         $todo->title = $request->title;
         $todo->save();
@@ -44,6 +47,8 @@ class TodoController extends Controller
     public function destroy(Todo $todo)
     {
         // BRIEF: Delete the TODO, then redirect back to the index
-        return route('login');
+        $todo->delete();
+        
+        return Redirect::to('index');
     }
 }
