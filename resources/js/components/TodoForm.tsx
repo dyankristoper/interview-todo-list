@@ -42,6 +42,11 @@ export default function TodoForm({ closeModal }: Props) {
 
             <div className="flex items-center justify-end gap-6">
                 {/* BRIEF: Ability to close the modal */}
+                <Button 
+                    theme='default'
+                    onClick={ closeModal }>
+                    Cancel
+                </Button>
 
                 <Button theme="primary" type="submit">
                     Save ToDo
