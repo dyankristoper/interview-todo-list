@@ -44,7 +44,7 @@ class TodoController extends Controller
         $currentTodo->save();
 
         return response()->json([
-            'message' => 'Something went wrong while deleting the item.'
+            'message' => 'Todo item was successfully updated.'
         ]);
     }
 

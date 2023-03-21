@@ -45,11 +45,14 @@ export default function TodosIndex({ todos }: Props) {
                                         <h2>
                                             { todo.title }
                                         </h2> 
-                                        <Button 
-                                            type='button' 
-                                            theme='info'>
-                                                Update
-                                        </Button>
+                                        {
+                                            todo.completed == true && 
+                                            <Button 
+                                                type='button' 
+                                                theme='info'>
+                                                    Mark as Complete
+                                            </Button>
+                                        }
                                         <Button 
                                             type='button' 
                                             theme='danger'
