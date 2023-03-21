@@ -43,17 +43,27 @@ class TodoController extends Controller
         $currentTodo->completed = true;
         $currentTodo->save();
 
-        return Redirect::to('index');
+        return response()->json([
+            'message' => 'Something went wrong while deleting the item.'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Todo $todo)
+    public function destroy( $id )
     {
         // BRIEF: Delete the TODO, then redirect back to the index
-        $todo->delete();
-        
-        return Redirect::to('index');
+        try{
+            Todo::find( intval($id) )->delete();
+            return response()->json([
+                'message' => 'Successfully deleted todo item.'
+            ]);
+
+        }catch(\Exception $e){
+            return response()->json([
+                'message' => $e
+            ]);
+        }
     }
 }
