@@ -26,6 +26,23 @@ export default function TodosIndex({ todos }: Props) {
         });
     }
 
+    /* 
+        Update todo function
+        Change completed status to true
+    */
+   const markAsDoneTodoHandler = ( id: Number ) => {
+       axios.put(`/todos/${id}`).then( response => {
+            setTodoList([
+                ...todos.map( todo => {
+                    if( todo.id === id ){
+                        todo.completed = true;
+                    }
+                    return todo;
+                })
+            ]);
+       });
+   }
+
     return (
         <Layout>
             <div className="container mt-12 mb-24">
@@ -46,10 +63,12 @@ export default function TodosIndex({ todos }: Props) {
                                             { todo.title }
                                         </h2> 
                                         {
-                                            todo.completed == true && 
+                                            todo.completed !== true && 
                                             <Button 
                                                 type='button' 
-                                                theme='info'>
+                                                theme='info'
+                                                onClick={ () => markAsDoneTodoHandler(todo.id) }
+                                            >
                                                     Mark as Complete
                                             </Button>
                                         }
@@ -57,7 +76,7 @@ export default function TodosIndex({ todos }: Props) {
                                             type='button' 
                                             theme='danger'
                                             onClick={ () => deleteTodoHandler(todo.id) }
-                                            >
+                                        >
                                                 Delete
                                         </Button>
                                     </Card>

@@ -39,12 +39,12 @@ class TodoController extends Controller
     public function update(Request $request, Todo $todo)
     {
         // BRIEF: Validate the request and update the TODO's "completed" status, then redirect back to the index
-        $currentTodo = Todo::query()->get($request->route('id'));
+        $currentTodo = Todo::findOrFail( intval( $request->route('id')) );
         $currentTodo->completed = true;
         $currentTodo->save();
 
         return response()->json([
-            'message' => 'Todo item was successfully updated.'
+            'message' => 'Successfully updated todo item.'
         ]);
     }
 
