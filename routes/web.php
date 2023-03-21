@@ -5,3 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TodoController::class, 'index'])->name('todos.index');
 // BRIEF: Write your routes here
+
+// POST Route - Create a new post
+Route::post('/todos', [TodoController::class, 'store'])->name('todos.store');
