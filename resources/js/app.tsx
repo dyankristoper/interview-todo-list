@@ -6,6 +6,8 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import Providers from './components/common/Providers';
 
+/* Todo App */
+
 createInertiaApp({
     title: () => "MyToDo's",
     resolve: (name) =>
