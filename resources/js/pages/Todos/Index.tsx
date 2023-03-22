@@ -43,6 +43,10 @@ export default function TodosIndex({ todos }: Props) {
        });
    }
 
+   React.useEffect(() => {
+    setTodoList([ ...todos ]);
+   }, [ todos ]);
+
     return (
         <Layout>
             <div className="container mt-12 mb-24">
