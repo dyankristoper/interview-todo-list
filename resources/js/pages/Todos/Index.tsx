@@ -18,13 +18,30 @@ export default function TodosIndex({ todos }: Props) {
         Delete todo function
         Send DELETE HTTP request
     */
-    const deleteTodoHandler = ( id: number ) => {
-        axios.delete(`http://127.0.0.1/todos/${id}`).then( response => {
+    const deleteTodoHandler = ( id : Number ) => {
+        axios.delete(`/todos/${ id }`).then( response => {
             setTodoList([
                 ...todoList.filter( todo => todo.id != id )
             ]);
         });
     }
+
+    /* 
+        Update todo function
+        Change completed status to true
+    */
+   const markAsDoneTodoHandler = ( id: Number ) => {
+       axios.put(`/todos/${id}`).then( response => {
+            setTodoList([
+                ...todos.map( todo => {
+                    if( todo.id === id ){
+                        todo.completed = true;
+                    }
+                    return todo;
+                })
+            ]);
+       });
+   }
 
     return (
         <Layout>
@@ -41,20 +58,25 @@ export default function TodosIndex({ todos }: Props) {
                     {/* BRIEF: Your code here */}
                     {
                         todoList.map( todo => { 
-                            return  <Card>
+                            return  <Card key={ `item-${todo.id}`}>
                                         <h2>
                                             { todo.title }
                                         </h2> 
-                                        <Button 
-                                            type='button' 
-                                            theme='info'>
-                                                Update
-                                        </Button>
+                                        {
+                                            todo.completed !== true && 
+                                            <Button 
+                                                type='button' 
+                                                theme='info'
+                                                onClick={ () => markAsDoneTodoHandler(todo.id) }
+                                            >
+                                                    Mark as Complete
+                                            </Button>
+                                        }
                                         <Button 
                                             type='button' 
                                             theme='danger'
                                             onClick={ () => deleteTodoHandler(todo.id) }
-                                            >
+                                        >
                                                 Delete
                                         </Button>
                                     </Card>
