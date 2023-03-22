@@ -1,16 +1,58 @@
 import React from 'react';
+import axios from 'axios';
 import Layout from '@/layouts/Layout';
 import { Todo } from '@/types';
 import Modal from '@/components/common/Modal';
 import TodoForm from '@/components/TodoForm';
 import Button from '@/components/common/Button';
-
+import Card from '@/components/common/Card';
 interface Props {
     todos: Todo[];
 }
 
 export default function TodosIndex({ todos }: Props) {
     const [modalOpen, setModalOpen] = React.useState(false);
+    const [todoList, setTodoList] = React.useState( todos );
+
+    /**
+        Delete todo function
+        Send DELETE HTTP request
+
+        @param { number } id - The unique identifier for a todo item
+    */
+    const deleteTodoHandler = ( id : Number ) => {
+        axios.delete(`/todos/${ id }`).then( response => {
+            setTodoList([
+                ...todoList.filter( todo => todo.id != id )
+            ]);
+        });
+    }
+
+    /** 
+        Update todo function
+        Change completed status to true
+
+        @param { number } id - The unique identifier for a todo item
+    */
+   const markAsDoneTodoHandler = ( id: Number ) => {
+       axios.put(`/todos/${id}`).then( response => {
+            setTodoList([
+                ...todos.map( todo => {
+                    if( todo.id === id ){
+                        todo.completed = true;
+                    }
+                    return todo;
+                })
+            ]);
+       });
+   }
+
+   /* 
+        Update the list of todos in the state
+   */
+   React.useEffect(() => {
+    setTodoList([ ...todos ]);
+   }, [ todos ]);
 
     return (
         <Layout>
@@ -25,7 +67,32 @@ export default function TodosIndex({ todos }: Props) {
                     </Button>
 
                     {/* BRIEF: Your code here */}
-                    {JSON.stringify(todos)}
+                    {
+                        todoList.map( todo => { 
+                            return  <Card key={ `item-${todo.id}`}>
+                                        <h2>
+                                            { todo.title }
+                                        </h2> 
+                                        {
+                                            todo.completed !== true && 
+                                            <Button 
+                                                type='button' 
+                                                theme='info'
+                                                onClick={ () => markAsDoneTodoHandler(todo.id) }
+                                            >
+                                                    Mark as Complete
+                                            </Button>
+                                        }
+                                        <Button 
+                                            type='button' 
+                                            theme='danger'
+                                            onClick={ () => deleteTodoHandler(todo.id) }
+                                        >
+                                                Delete
+                                        </Button>
+                                    </Card>
+                        })
+                    }
                 </div>
             </div>
 
