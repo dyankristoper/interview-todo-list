@@ -25,12 +25,15 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         // BRIEF: Validate the request and save a new TODO, then redirect back to the index
+        $validated = $request->validate([
+            'title' => 'required',
+        ]);
 
-        // TODO: Add validation of input
-
-        $todo = new Todo;
-        $todo->title = $request->title;
-        $todo->save();
+        if( $validated ){
+            $todo = new Todo;
+            $todo->title = $request->title;
+            $todo->save();
+        }
     }
 
     /**
@@ -54,6 +57,7 @@ class TodoController extends Controller
     public function destroy( $id )
     {
         // BRIEF: Delete the TODO, then redirect back to the index
+
         try{
             Todo::find( intval($id) )->delete();
             return response()->json([

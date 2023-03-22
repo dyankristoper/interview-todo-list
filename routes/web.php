@@ -9,8 +9,16 @@ Route::get('/', [TodoController::class, 'index'])->name('todos.index');
 // POST Route - Create a new todo
 Route::post('/todos', [TodoController::class, 'store'])->name('todos.store');
 
-// PUT Route - Update the current todo
+/** 
+    @method PUT
+    @description Update the todo item and change completed field to true
+    @params id - Number
+*/
 Route::put('/todos/{id}', [TodoController::class, 'update'])->name('todos.update');
 
-// DELETE Route - Delete an existing todo
+/** 
+    @method DELETE
+    @description Remote an existing todo item
+    @params id - Number
+*/
 Route::delete('/todos/{id}', [TodoController::class, 'destroy'])->name('todos.destroy');
