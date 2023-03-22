@@ -14,9 +14,11 @@ export default function TodosIndex({ todos }: Props) {
     const [modalOpen, setModalOpen] = React.useState(false);
     const [todoList, setTodoList] = React.useState( todos );
 
-    /* 
+    /**
         Delete todo function
         Send DELETE HTTP request
+
+        @param { number } id - The unique identifier for a todo item
     */
     const deleteTodoHandler = ( id : Number ) => {
         axios.delete(`/todos/${ id }`).then( response => {
@@ -26,9 +28,11 @@ export default function TodosIndex({ todos }: Props) {
         });
     }
 
-    /* 
+    /** 
         Update todo function
         Change completed status to true
+
+        @param { number } id - The unique identifier for a todo item
     */
    const markAsDoneTodoHandler = ( id: Number ) => {
        axios.put(`/todos/${id}`).then( response => {
@@ -43,6 +47,9 @@ export default function TodosIndex({ todos }: Props) {
        });
    }
 
+   /* 
+        Update the list of todos in the state
+   */
    React.useEffect(() => {
     setTodoList([ ...todos ]);
    }, [ todos ]);
